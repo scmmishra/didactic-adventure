@@ -12,4 +12,5 @@ pytz==2018.3
 six==1.11.0
 sqlparse==0.2.4
 typing==3.6.4
+Werkzeug==0.14.1
 wrapt==1.10.11
