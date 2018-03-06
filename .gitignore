@@ -166,3 +166,5 @@ typings/
 # next.js build output
 .next
 
+# Sqlite3 Database
+*.sqlite3
