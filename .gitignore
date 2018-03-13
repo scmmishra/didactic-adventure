@@ -168,3 +168,6 @@ typings/
 
 # Sqlite3 Database
 *.sqlite3
+
+# vscode
+.vscode/
