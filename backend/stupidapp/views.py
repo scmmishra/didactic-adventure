@@ -3,20 +3,6 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_GET
 from .models import Campaign, Child, Course, Immunization, Mother, Organization, Vaccine
-import json
-
-# Create your views here.
-
-def show(request):
-    return JsonResponse({"message": "Hello, World."})
-
-@csrf_exempt
-@require_POST
-def submit(request):
-    data = json.loads(request.body.decode())
-    if "message" in data:
-        return JsonResponse({"status": "success", "message": data["message"]})
-    return JsonResponse({"staus":"failure", "message": None})
 
 @require_GET
 def classes(request, **kwargs):

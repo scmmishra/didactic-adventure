@@ -3,8 +3,6 @@ from django.urls import include, path
 from .views import show, submit, classes
 
 urlpatterns = [
-    path('show/', show),
-    path('submit/', submit),
     path('campaigns/', classes, {"class": "Campaign"}),
     path('children/', classes, {"class": "Child"}),
     path('courses/', classes, {"class": "Course"}),
