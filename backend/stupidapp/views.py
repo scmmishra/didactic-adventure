@@ -45,3 +45,35 @@ def post_classes(request, *args, **kwargs):
     except:
         response = JsonResponse({"status": "failure"}, status=422)
     return response
+
+fields = {
+    "Child": {
+        "id": "id__contains",
+        "first_name": "first_name__contains",
+        "last_name": "last_name__contains",
+        },
+    "Mother": {
+        "id": "id__contains",
+        "first_name": "first_name__contains",
+        "last_name": "last_name__contains",
+    }
+}
+
+@csrf_exempt
+@require_POST
+def filter_classes(request, *args, **kwargs):
+    try:
+        data = json.loads(request.body)
+        page, entries = data["page"], data["entries"]
+        query_dict = {fields[kwargs["class"]][key]: value for key, value in data["fields"].items()}
+        query = klasses[kwargs["class"]].objects.filter()
+        for key, value in query_dict.items():
+            query = query.filter(**{key: value})
+        data_query = query[(page-1)*entries:page*entries]
+        count_query = query.count()
+        response = JsonResponse({"status": "success", "data": json.loads(serialize("json", data_query)), "count": count_query}, status=200)
+    except:
+        import traceback
+        traceback.print_exc()
+        response = JsonResponse({"status": "failure"}, status=422)
+    return response
