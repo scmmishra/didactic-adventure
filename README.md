@@ -28,6 +28,10 @@
 
     `cd backend`
 
-2. Run django development server
+2. Migrate models
+
+    `./manage.py mrigrate`
+
+3. Run django development server
 
     `./manage.py runserver_plus`
