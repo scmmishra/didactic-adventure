@@ -1,22 +1,47 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST, require_GET
+from django.views.decorators.http import require_POST, require_GET, require_http_methods
+from django.core.serializers import serialize
 from .models import Campaign, Child, Course, Immunization, Mother, Organization, Vaccine
+import json
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+def classes(request, *args, **kwargs):
+    if request.method == "GET":
+        return get_classes(request, *args, **kwargs)
+    else:
+        return post_classes(request, *args, **kwargs)
+        
+klasses = {
+    "Campaign": Campaign,
+    "Child": Child,
+    "Course": Course,
+    "Immunization": Immunization,
+    "Mother": Mother,
+    "Organization": Organization,
+    "Vaccine": Vaccine
+}
 
 @require_GET
-def classes(request, **kwargs):
-    klass = {
-        "Campaign": Campaign,
-        "Child": Child,
-        "Course": Course,
-        "Immunization": Immunization,
-        "Mother": Mother,
-        "Organization": Organization,
-        "Vaccine": Vaccine
-    }
+def get_classes(request, *args, **kwargs):
     try:
-        response = JsonResponse({"status": "success", "data": list(klass[kwargs["class"]].objects.all())}, status=200)
+        klass = klasses[kwargs["class"]]
+        response = JsonResponse({"status": "success", "data": json.loads(serialize("json", klass.objects.all()))}, status=200)
     except:
         response = JsonResponse({"status": "failure"}, status=404)
+    return response
+
+@csrf_exempt
+@require_POST
+def post_classes(request, *args, **kwargs):
+    try:
+        klass = klasses[kwargs["class"]]
+        data = json.loads(request.body)
+        entry = klass(**data)
+        entry.save()
+        response = JsonResponse({"status": "success", "data": json.loads(serialize("json", [klass.objects.get(id=entry.id)]))[0]}, status=200)
+    except:
+        response = JsonResponse({"status": "failure"}, status=422)
     return response

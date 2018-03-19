@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from .views import show, submit, classes
+from .views import classes
 
 urlpatterns = [
     path('campaigns/', classes, {"class": "Campaign"}),
