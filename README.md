@@ -30,7 +30,7 @@
 
 2. Migrate models
 
-    `./manage.py mrigrate`
+    `./manage.py migrate`
 
 3. Run django development server
 
