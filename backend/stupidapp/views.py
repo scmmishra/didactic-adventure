@@ -33,6 +33,15 @@ def get_classes(request, *args, **kwargs):
         response = JsonResponse({"status": "failure"}, status=404)
     return response
 
+@require_GET
+def ids(request, id, *args, **kwargs):
+    try:
+        klass = klasses[kwargs["class"]]
+        response = JsonResponse({"status": "success", "data": json.loads(serialize("json", [klass.objects.get(id=id)]))[0]}, status=200)
+    except:
+        response = JsonResponse({"status": "failure"}, status=404)
+    return response
+
 @csrf_exempt
 @require_POST
 def post_classes(request, *args, **kwargs):
