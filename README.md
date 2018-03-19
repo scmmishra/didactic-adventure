@@ -4,30 +4,30 @@
 
 1. Clone this repository
 
- `git clone https://github.com/adityahase/didactic-adventure`
+    `git clone https://github.com/adityahase/didactic-adventure`
 
 2. Change directory
 
- `cd didactic-adventure`
+    `cd didactic-adventure`
 
 3. Create virtual environment
 
- `virtualenv -p python3 env`
+    `virtualenv -p python3 env`
 
 4. Activate virtual environment
 
- `source env/bin/activate`
+    `source env/bin/activate`
 
 5. Install requirements
 
- `pip install -r requirements.txt`
+    `pip install -r requirements.txt`
 
 ## Running application
 
 1. Go to django directory
 
- `cd backend`
+    `cd backend`
 
 2. Run django development server
 
- `./manage.py runserver_plus`
+    `./manage.py runserver_plus`
